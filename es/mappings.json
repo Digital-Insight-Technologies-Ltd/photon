@@ -404,6 +404,10 @@
 				"type": "keyword",
 				"index": true
 			},
+			"parent_place_id": {
+				"type": "long",
+				"index": false
+			},
 			"osm_type": {
 				"type": "text",
 				"index": false
