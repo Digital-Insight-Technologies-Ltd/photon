@@ -34,6 +34,7 @@ public class PhotonDoc {
     final private CountryCode countryCode;
     final private long linkedPlaceId; // 0 if unset
     final private int rankAddress;
+    final private String extraFields;
 
     private Map<String, String> street;
     private Map<String, String> locality;
@@ -46,7 +47,8 @@ public class PhotonDoc {
     private String houseNumber;
     private Point centroid;
 
-    public PhotonDoc(long placeId, String osmType, long osmId, String tagKey, String tagValue, Map<String, String> name, String houseNumber, Map<String, String> address, Map<String, String> extratags, Envelope bbox, long parentPlaceId, double importance, String countryCode, Point centroid, long linkedPlaceId, int rankAddress) {
+    public PhotonDoc(long placeId, String osmType, long osmId, String tagKey, String tagValue, Map<String, String> name, String houseNumber, Map<String, String> address, Map<String, String> extratags, Envelope bbox, long parentPlaceId, double importance, String countryCode, Point centroid, long linkedPlaceId, int rankAddress, String extraFields) {
+        this.extraFields = extraFields;
         if (extratags != null) {
             String place = extratags.get("place");
             if (place == null) {
@@ -103,6 +105,7 @@ public class PhotonDoc {
         this.context = other.context;
         this.country = other.country;
         this.state = other.state;
+        this.extraFields = other.extraFields;
     }
 
     public String getUid() {
@@ -117,7 +120,7 @@ public class PhotonDoc {
      */
     public static PhotonDoc create(long placeId, String osmType, long osmId, Map<String, String> nameMap) {
         return new PhotonDoc(placeId, osmType, osmId, "", "", nameMap,
-                "", null, null, null, 0, 0, null, null, 0, 0);
+                "", null, null, null, 0, 0, null, null, 0, 0, null);
     }
 
     /**

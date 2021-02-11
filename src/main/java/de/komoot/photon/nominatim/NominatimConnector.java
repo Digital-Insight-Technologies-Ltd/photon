@@ -150,7 +150,8 @@ public class NominatimConnector {
                     rs.getString("country_code"),
                     (Point) null, // centroid
                     0,
-                    30
+                    30,
+                    "empty for now"
             );
             doc.setPostcode(rs.getString("postcode"));
             doc.setCountry(getCountryNames(rs.getString("country_code")));
@@ -194,7 +195,8 @@ public class NominatimConnector {
                     rs.getString("country_code"),
                     (Point) DBUtils.extractGeometry(rs, "centroid"),
                     rs.getLong("linked_place_id"),
-                    rs.getInt("rank_address")
+                    rs.getInt("rank_address"),
+                    "empty for now"
             );
 
             doc.setPostcode(rs.getString("postcode"));
@@ -294,7 +296,7 @@ public class NominatimConnector {
         return terms;
     }
 
-    private static final PhotonDoc FINAL_DOCUMENT = new PhotonDoc(0, null, 0, null, null, null, null, null, null, null, 0, 0, null, null, 0, 0);
+    private static final PhotonDoc FINAL_DOCUMENT = new PhotonDoc(0, null, 0, null, null, null, null, null, null, null, 0, 0, null, null, 0, 0, null);
 
     private class ImportThread implements Runnable {
         private final BlockingQueue<PhotonDoc> documents;

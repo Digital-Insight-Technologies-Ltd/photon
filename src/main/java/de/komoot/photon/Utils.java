@@ -28,6 +28,7 @@ public class Utils {
                 .field(Constants.OSM_TYPE, doc.getOsmType())
                 .field(Constants.OSM_KEY, doc.getTagKey())
                 .field(Constants.OSM_PARENT_ID, doc.getParentPlaceId())
+                .field(Constants.EXTRA_FIELDS, doc.getExtraFields())
                 .field(Constants.OSM_VALUE, doc.getTagValue())
                 .field(Constants.OBJECT_TYPE, doc.getObjectType())
                 .field(Constants.IMPORTANCE, doc.getImportance());

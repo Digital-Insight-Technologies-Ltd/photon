@@ -408,6 +408,10 @@
 				"type": "long",
 				"index": false
 			},
+			"extra_fields": {
+				"type": "string",
+				"index": false
+			},
 			"osm_type": {
 				"type": "text",
 				"index": false
