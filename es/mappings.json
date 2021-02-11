@@ -409,7 +409,7 @@
 				"index": false
 			},
 			"extra_fields": {
-				"type": "string",
+				"type": "text",
 				"index": false
 			},
 			"osm_type": {
