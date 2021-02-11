@@ -11,6 +11,7 @@ import de.komoot.photon.PhotonDoc;
 import de.komoot.photon.nominatim.model.AddressRow;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.json.JSONObject;
 import org.postgis.jts.JtsWrapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
@@ -151,7 +152,7 @@ public class NominatimConnector {
                     (Point) null, // centroid
                     0,
                     30,
-                    "empty for now"
+                    "{}"
             );
             doc.setPostcode(rs.getString("postcode"));
             doc.setCountry(getCountryNames(rs.getString("country_code")));
@@ -196,7 +197,7 @@ public class NominatimConnector {
                     (Point) DBUtils.extractGeometry(rs, "centroid"),
                     rs.getLong("linked_place_id"),
                     rs.getInt("rank_address"),
-                    "empty for now"
+                    ExtraFieldsForPlace(rs)
             );
 
             doc.setPostcode(rs.getString("postcode"));
@@ -206,6 +207,15 @@ public class NominatimConnector {
             result.addHousenumbersFromString(rs.getString("housenumber"));
 
             return result;
+        }
+
+        private String ExtraFieldsForPlace(ResultSet rs) throws SQLException {
+            JSONObject json = new JSONObject();
+            json.put("name", DBUtils.getMap(rs, "name"));
+            json.put("address", DBUtils.getMap(rs, "address"));
+            json.put("extratags", DBUtils.getMap(rs, "extratags"));
+            json.put("rank_address", rs.getInt("rank_address"));
+            return json.toString();
         }
     };
     private final String selectColsPlaceX = "place_id, osm_type, osm_id, class, type, name, housenumber, postcode, address, extratags, ST_Envelope(geometry) AS bbox, parent_place_id, linked_place_id, rank_address, rank_search, importance, country_code, centroid";
