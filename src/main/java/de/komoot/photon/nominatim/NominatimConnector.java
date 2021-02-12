@@ -370,7 +370,7 @@ public class NominatimConnector {
         template.query("SELECT " + selectColsPlaceX +
                 " FROM placex " +
                 " WHERE linked_place_id IS NULL AND centroid IS NOT NULL " + andCountryCodeStr +
-                " ORDER BY geometry_sector; ", new RowCallbackHandler() {
+                "; ", new RowCallbackHandler() {
             @Override
             public void processRow(ResultSet rs) throws SQLException {
                 // turns a placex row into a photon document that gathers all de-normalised information
@@ -403,7 +403,7 @@ public class NominatimConnector {
         template.query("SELECT place_id, osm_id, parent_place_id, startnumber, endnumber, interpolationtype, postcode, country_code, linegeo " +
                 " FROM location_property_osmline " +
                 whereCountryCodeStr +
-                " ORDER BY geometry_sector; ", new RowCallbackHandler() {
+                "; ", new RowCallbackHandler() {
             @Override
             public void processRow(ResultSet rs) throws SQLException {
                 NominatimResult docs = osmlineRowMapper.mapRow(rs, 0);
