@@ -33,4 +33,5 @@ public class Constants {
     public static final String EXTRA_FIELDS = "extra_fields";
     public static final String OSM_VALUE = "osm_value";
     public static final String OBJECT_TYPE = "object_type";
+    public static final String PLACE_ID = "place_id";
 }
