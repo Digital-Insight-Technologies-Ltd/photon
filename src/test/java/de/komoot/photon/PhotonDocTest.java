@@ -35,14 +35,14 @@ public class PhotonDocTest {
 
     @Test
     public void testAddCountryCode() {
-        PhotonDoc doc = new PhotonDoc(1, "W", 2, "highway", "residential", null, "4", null, null, null, 0, 30, "de", null, 0, 30);
+        PhotonDoc doc = new PhotonDoc(1, "W", 2, "highway", "residential", null, "4", null, null, null, 0, 30, "de", null, 0, 30, null);
 
         Assert.assertNotNull(doc.getCountryCode());
         Assert.assertEquals("DE", doc.getCountryCode().getAlpha2());
     }
 
     private PhotonDoc createPhotonDocWithAddress(HashMap<String, String> address) {
-        return new PhotonDoc(1, "W", 2, "highway", "residential", null, "4", address, null, null, 0, 30, null, null, 0, 30);
+        return new PhotonDoc(1, "W", 2, "highway", "residential", null, "4", address, null, null, 0, 30, null, null, 0, 30, null);
     }
 
 }

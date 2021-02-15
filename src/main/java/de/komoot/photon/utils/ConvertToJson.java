@@ -3,6 +3,7 @@ package de.komoot.photon.utils;
 import com.google.common.collect.Lists;
 import de.komoot.photon.Constants;
 import lombok.extern.slf4j.Slf4j;
+import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.search.SearchHit;
 import org.json.JSONArray;
@@ -25,6 +26,44 @@ public class ConvertToJson {
 
     public ConvertToJson(String lang) {
         this.lang = lang;
+    }
+
+    public JSONObject convertGet(GetResponse hit) {
+        final Map<String, Object> source = hit.getSource();
+
+        final JSONObject feature = new JSONObject();
+        feature.put(Constants.TYPE, Constants.FEATURE);
+        feature.put(Constants.GEOMETRY, getPoint(source));
+
+        // populate properties
+        final JSONObject properties = new JSONObject();
+
+        // language unspecific properties
+        for (String key : KEYS_LANG_UNSPEC) {
+            if (source.containsKey(key))
+                properties.put(key, source.get(key));
+        }
+
+        // language specific properties
+        for (String key : KEYS_LANG_SPEC) {
+            if (source.containsKey(key))
+                properties.put(key, getLocalised(source, key, lang));
+        }
+
+        // place type
+        properties.put("type", source.get(Constants.OBJECT_TYPE));
+
+        // add extent of geometry
+        final Map<String, Object> extent = (Map<String, Object>) source.get("extent");
+        if (extent != null) {
+            List<List<Double>> coords = (List<List<Double>>) extent.get("coordinates");
+            final List<Double> nw = coords.get(0);
+            final List<Double> se = coords.get(1);
+            properties.put("extent", new JSONArray(Lists.newArrayList(nw.get(0), nw.get(1), se.get(0), se.get(1))));
+        }
+
+        feature.put(Constants.PROPERTIES, properties);
+        return feature;
     }
 
     public List<JSONObject> convert(SearchResponse searchResponse) {
