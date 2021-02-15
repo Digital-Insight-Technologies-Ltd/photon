@@ -65,15 +65,15 @@ public class Server {
     }
 
     public Server(String clusterName, String mainDirectory, String languages, String transportAddresses) {
-        try {
-            if (SystemUtils.IS_OS_WINDOWS) {
-                setupDirectories(new URL("file:///" + mainDirectory));
-            } else {
-                setupDirectories(new URL("file://" + mainDirectory));
-            }
-        } catch (Exception e) {
-            throw new RuntimeException("Can't create directories: " + mainDirectory, e);
-        }
+//        try {
+//            if (SystemUtils.IS_OS_WINDOWS) {
+//                setupDirectories(new URL("file:///" + mainDirectory));
+//            } else {
+//                setupDirectories(new URL("file://" + mainDirectory));
+//            }
+//        } catch (Exception e) {
+//            throw new RuntimeException("Can't create directories: " + mainDirectory, e);
+//        }
         this.clusterName = clusterName;
         this.languages = languages.split(",");
         this.transportAddresses = transportAddresses;
@@ -81,7 +81,7 @@ public class Server {
 
     public Server start() {
         Settings.Builder sBuilder = Settings.builder();
-        sBuilder.put("path.home", this.esDirectory.toString());
+        //sBuilder.put("path.home", this.esDirectory.toString());
         sBuilder.put("network.host", "127.0.0.1"); // http://stackoverflow.com/a/15509589/1245622
         sBuilder.put("cluster.name", clusterName);
 
