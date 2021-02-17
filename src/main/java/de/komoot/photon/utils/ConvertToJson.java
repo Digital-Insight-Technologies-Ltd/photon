@@ -32,7 +32,7 @@ public class ConvertToJson {
         final Map<String, Object> source = hit.getSource();
 
         final JSONObject feature = new JSONObject();
-        feature.put(Constants.PLACE_ID, Integer.parseInt(hit.getId()));
+        feature.put(Constants.PLACE_ID, hit.getId());
         feature.put(Constants.TYPE, Constants.FEATURE);
         feature.put(Constants.GEOMETRY, getPoint(source));
 
